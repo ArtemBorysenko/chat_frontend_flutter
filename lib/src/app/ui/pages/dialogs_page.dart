@@ -13,30 +13,46 @@ class DialogsPage extends StatefulWidget {
 }
 
 class _DialogsPageState extends State<DialogsPage> {
-
+  
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context){
 
   final DialogsBloc dialogsBloc = Provider.of<DialogsBloc>(context);
-  dialogsBloc.dispose();
 
     return Scaffold(
       key: _scaffoldKey,
       body: Center(
         child: Column(
           children: <Widget>[
-          Expanded(
+          Expanded( 
             child: StreamBuilder(
+              initialData: dialogsBloc.initionalData(),
               stream: dialogsBloc.outDialogsBloc,
               builder: (BuildContext context, snapshot){
-                //TODO
-                    })
+                print(snapshot.data);
+                 if (!snapshot.hasData) return new Text('Loading...');
+                  return new ListView(
+                    children: snapshot.data.map<Widget>((item) {
+                      return new ListTile(
+                        title: new Text(item.author),
+                        subtitle: new Text(item.partner),
+                      );
+                      }).toList()
+                  );
+              })
           ),
+          
         ],
         ),
     ),
+    floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.check),
+        onPressed: () {
+          dialogsBloc.getDialogsBloc.add(null);
+        },
+      ),
     );
   }
 }

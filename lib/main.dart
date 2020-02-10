@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chat_frontend_flutter/src/app/core/blocs/application_bloc.dart';
+import 'package:chat_frontend_flutter/src/app/core/blocs/dialogs_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/ui/pages/home_page.dart';
 
 Future<void> main() async {
   return runApp(
     MultiProvider(
   providers: [
-    Provider<ApplicationBloc>(create: (context) => ApplicationBloc()),
+    Provider<DialogsBloc>(create: (context) => DialogsBloc()),
   ],
    child: MyApp(),
 ) 

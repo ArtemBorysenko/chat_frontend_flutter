@@ -13,11 +13,16 @@ import 'package:http/http.dart' as http;
 
 class HomePage extends StatelessWidget {
   
+
     final TextEditingController controller = new TextEditingController();
     String result = "";
 
   @override
   Widget build(BuildContext context) {
+
+  final DialogsBloc dialogsBloc = Provider.of<DialogsBloc>(context);
+
+
     return Scaffold(
       appBar: AppBar(title: Text('Chat')),
       body: Center(
@@ -39,7 +44,7 @@ class HomePage extends StatelessWidget {
             RaisedButton(
               child: Text('Dialogs'),
               onPressed: () {
-                _openPageDialogs(context);
+                _openPageDialogs(context, dialogsBloc);
               },
             ),
                 ]
@@ -65,11 +70,8 @@ class HomePage extends StatelessWidget {
     ));
   }
 
-  // void _openPageDialogs(BuildContext context) async {
-  //   dialogsApi.getDialogs();
-  // }
-
-  void _openPageDialogs(BuildContext context) async {
+void _openPageDialogs(BuildContext context, DialogsBloc dialogsBloc) async {
+                 
      Navigator
         .of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
@@ -79,4 +81,11 @@ class HomePage extends StatelessWidget {
         child: DialogsPage(),
       );
     }));
+  dialogsBloc.getDialogsBloc.add(null);
   }
+
+  // void _openPageDialogs(BuildContext context) async {
+  //   dialogsApi.getDialogs();
+  // }
+
+  
