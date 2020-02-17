@@ -13,16 +13,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context){
 
+        final Widget fullname = TextField(
+      keyboardType: TextInputType.emailAddress,
+      autofocus: true,
+      decoration: InputDecoration(hintText: 'Fullname',),
+    );
+
     final Widget email = TextField(
       keyboardType: TextInputType.emailAddress,
       autofocus: true,
       decoration: InputDecoration(hintText: 'Email',),
-    );
-
-    final Widget fullname = TextField(
-      keyboardType: TextInputType.emailAddress,
-      autofocus: true,
-      decoration: InputDecoration(hintText: 'Fullname',),
     );
 
     final Widget password = TextField(
@@ -36,8 +36,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
       body: Center(
         child: ListView(
           children: <Widget>[
-            email,
             fullname,
+            email,
             password,
           ]
         ),

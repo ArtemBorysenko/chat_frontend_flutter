@@ -9,7 +9,7 @@ class TEST_DialogModelList {
   TEST_DialogModelList.ListFromJSON(List<Map<String, dynamic>> json)
    : dialogs = (json[0] as List<dynamic>)
                 .map((item) { 
-                  print(item);
+                  // print(item);
                   return item;}).toList();
 
 

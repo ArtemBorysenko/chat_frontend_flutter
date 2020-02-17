@@ -5,10 +5,8 @@ class DialogListModel {
 
   DialogListModel.fromJSON(List<dynamic> json){
     dialogs = json.map((item) {
-      // print(item["_id"]);
       return DialogModel.fromJSON(item);
     }).toList();
-    // print('dialogs $dialogs');
   }
   //  : dialogs = (json[0])
   //               .map((item) { 

@@ -1,13 +1,15 @@
 class DialogModel {
+  final String id;
   final String author;
   final String partner;
-  final String updatedAt;
+  final String lastMessage;
 
-  DialogModel(this.author, this.partner, this.updatedAt);
+  DialogModel(this.id, this.author, this.partner, this.lastMessage);
 
   DialogModel.fromJSON(Map<String, dynamic> json)
-    : partner = json["_id"],
-      author  = json["author"]["_id"],
-      updatedAt  = json["updatedAt"];
-
+    : id = json["_id"],
+      author  = json["author"]["fullname"],
+      partner =  json["partner"]["fullname"],
+      lastMessage = json["lastMessage"]["text"];
+      
 }

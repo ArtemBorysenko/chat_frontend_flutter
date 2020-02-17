@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
 class DialogsApi {
-  String token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMjE5NTlhMTJhMjg3MmE2NWQ4YTYwMSIsIm5hbWUiOiJQZXR5YSIsImVtYWlsIjoidGVzdDNAdGVzdC5pbyIsImlhdCI6MTU3OTUzMzM0Nn0.-VQu9RWsXweDB0fM4TfcT2CCyd4LGp7By7e5_Bcs1NM';
+  String token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlNDJiMDhjZTZmZjBkMDc5NDM0ZDYzYSIsIm5hbWUiOiJQZXR5YSIsImVtYWlsIjoiRmx1dHRlcjFAdGVzdC5pbyIsImlhdCI6MTU4MTUxNDYxOH0.0DoKJgKXZ-dePz0fqURbIOW3JcD7LXnk3F5W_Ot6lAw';
   static const String baseUrl = '10.0.2.2:3003';
   final _httpClient = new HttpClient();
 
