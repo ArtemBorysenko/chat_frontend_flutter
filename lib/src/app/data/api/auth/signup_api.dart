@@ -6,9 +6,9 @@ import 'package:chat_frontend_flutter/src/app/models/message_list_model.dart';
 
 import 'package:http/http.dart' as http;
 
-class DialogApi {
-  String token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlNGJmYTc1YjExZWVmMDAxN2NjNWM1NCIsIm5hbWUiOiJIZXJva3UiLCJlbWFpbCI6Imhlcm9rdVRFU1RAdGVzdC5pbyIsImlhdCI6MTU4MjAzNzYyNX0.9nK5nngIy_MiwszPvNHNJ4JjDRKvxR0n-Vw6AZacjx0';
-  static const String baseUrl = 'chat-backend-koa.herokuapp.com';
+class SignupApi {
+  String token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlNGE2MGQ0NWZlNDQ1MjBmYjg4Y2M2NCIsIm5hbWUiOiJQZXR5YSIsImVtYWlsIjoiZmx1dHRlcjFAdGVzdC5pbyIsImlhdCI6MTU4MTkzMjc4Nn0.TpROgfrAqWb_VVudaTUZ7aBZQ8zOQfBf_D8PuIQZI34';
+  static const String baseUrl = '10.0.2.2:3003';
   final _httpClient = new HttpClient();
   
 Future<MessageListModel> getDialog(String dialogId) async {
@@ -34,4 +34,4 @@ Future<http.Response> _getRequest(Uri uri) async {
 
 }
 
-DialogApi dialogApi = DialogApi();
+SignupApi sigupApi = SignupApi();

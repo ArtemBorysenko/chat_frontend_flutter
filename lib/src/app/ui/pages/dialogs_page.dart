@@ -1,12 +1,13 @@
+import 'dart:io';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chat_frontend_flutter/src/app/core/blocs/dialogs_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/core/blocs/dialog_bloc.dart';
 
-import 'package:chat_frontend_flutter/src/app/data/api/dialog_api.dart';
 import 'package:chat_frontend_flutter/src/app/ui/pages/dialog_page.dart';
-
 
 class DialogsPage extends StatefulWidget {
   static String tag = "Login Page";
@@ -22,7 +23,6 @@ class _DialogsPageState extends State<DialogsPage> {
 
   @override
   Widget build(BuildContext context){
-
 
   final DialogsBloc dialogsBloc = Provider.of<DialogsBloc>(context);
 

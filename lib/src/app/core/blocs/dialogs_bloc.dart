@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:collection';
 import 'package:rxdart/rxdart.dart';
 
@@ -8,37 +9,30 @@ import 'package:chat_frontend_flutter/src/app/data/api/dialogs_api.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-
-
 class DialogsBloc {
-  
     
   _socketStatus() {
     print('socket run');
   }
 
-//=============================================================================
-//WORK
 // --> GET /socket.io/?EIO=3&transport=polling 404 1ms - 10.0.2.2 no proxy and with
-socketFun(){
-IO.Socket socket = IO.io('http://10.0.2.2:3003', <String, dynamic>{
+socketFunc(){
+IO.Socket socket = IO.io('http://10.0.2.2:3003/', <String, dynamic>{
     'transports': ['websocket'],
   });
-// socket.emit('connect');
 
+socket.emit('connection', "connn");
 
-  socket.on('send_message', (_) {
-     print('send_message');
+  socket.on('send_message', (message) {
+     print('send_message ${message}');
     });
 
   socket.emit('send_message', "_socketStatus");
 
   socket.emit('disconnect', "(_) => print('disconnect')");
 
-  socket.disconnect();
+  // socket.disconnect();
 }
-//=============================================================================
-
 
   StreamController<List<DialogModel>> _syncController =
       StreamController<List<DialogModel>>.broadcast();
@@ -51,11 +45,15 @@ IO.Socket socket = IO.io('http://10.0.2.2:3003', <String, dynamic>{
   DialogListModel _dialogsList;
 
   DialogsBloc() {
+
     dialogsApi.getDialogs().then((list) {
       _dialogsList = list;
     _syncController.sink
           .add(UnmodifiableListView<DialogModel>(_dialogsList.dialogs));
     });
+  
+  
+    socketFunc();
   }
 
   DialogListModel initionalData() {

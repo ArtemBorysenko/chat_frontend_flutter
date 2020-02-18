@@ -15,10 +15,8 @@ dependencies:
   bloc:
   provider:
   http:
-  flutter_socket_io:
-  web_socket_channel:
   socket_io_client:
-  socket_io_common:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:
