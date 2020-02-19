@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:chat_frontend_flutter/src/app/ui/pages/dialogs_page.dart';
+import 'package:chat_frontend_flutter/src/app/core/blocs/dialogs_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/data/api/auth/signin_api.dart';
 import 'package:chat_frontend_flutter/src/app/core/blocs/auth/signin_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 
 class LoginPage extends StatefulWidget {
   static String tag = "Login Page";
@@ -15,7 +16,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  String loginValue = "";
+  String emailValue = "";
   String passwordValue = "";
 
   @override
@@ -27,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
       decoration: InputDecoration(hintText: 'Email',),
       onChanged: (String str){
                     setState((){
-                      loginValue = str;
+                      emailValue = str;
                     });
                   }
     );
@@ -47,38 +48,20 @@ class _LoginPageState extends State<LoginPage> {
     final Widget button = RaisedButton(
       child: Text("Sign In"),
       onPressed: () { 
-        SigninBloc signinBloc = SigninBloc(loginValue, passwordValue);
+        SigninBloc signinBloc = SigninBloc(emailValue, passwordValue);
+        Navigator
+        .of(context)
+        .push(MaterialPageRoute(builder: (BuildContext context) {
+          return Provider<DialogsBloc>(
+          create: (context) => DialogsBloc(),
+          dispose: (context, value) => value.dispose(),
+          child: DialogsPage(),
+       );
+    }));
       },
     );
 
-
-     _incrementCounter() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  // await prefs.setInt('counter', 0);
-  int counter = (prefs.getInt('counter') ?? 0) + 1;
-   print('Pressed $counter times.');
-  await prefs.setInt('counter', counter);
-
-  //       final prefs = await SharedPreferences.getInstance();
-  //       final key = 'my_int_key';
-  //       final value = 42;
-  //       prefs.setInt(key, value);
-  //       print('saved $value');
-
-  //       final prefs = await SharedPreferences.getInstance();
-  //       final key = 'my_int_key';
-  //       final value = prefs.getInt(key) ?? 0;
-  //       print('read: $value');
-      };
-
-
-    final Widget increment = RaisedButton(
-      child: Text("Increment"),
-      onPressed: () { 
-      // SharedPreferences.setMockInitialValues ({"1": "23"});
-    _incrementCounter();
-      }
-    );
+    
 
     return Scaffold(
       body: Padding(
@@ -90,7 +73,6 @@ class _LoginPageState extends State<LoginPage> {
                   email,
                   password,
                   button,
-                  increment,
                 ]
           ),
         ),

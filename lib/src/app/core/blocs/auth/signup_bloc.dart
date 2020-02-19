@@ -2,33 +2,35 @@ import 'dart:async';
 import 'dart:collection';
 import 'package:rxdart/rxdart.dart';
 
+import 'package:chat_frontend_flutter/src/app/models/user_model.dart';
 import 'package:chat_frontend_flutter/src/app/models/message_model.dart';
 import 'package:chat_frontend_flutter/src/app/models/message_list_model.dart';
-import 'package:chat_frontend_flutter/src/app/data/api/auth/signin_api.dart';
+import 'package:chat_frontend_flutter/src/app/data/api/auth/signup_api.dart';
 import 'package:chat_frontend_flutter/src/app/data/api/dialog_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-class SigninBloc {
+class SignupBloc {
   StreamController _syncController =
-      StreamController<String>.broadcast();
+      StreamController<UserModel>.broadcast();
   Stream get outDialogBloc => _syncController.stream;
 
   StreamController _cmdController =
-      StreamController<String>.broadcast();
+      StreamController<UserModel>.broadcast();
   StreamSink get getDialogBloc => _cmdController.sink;
 
-  String token;
-  Map<String, dynamic> values = { "toekn": "asdasd" };
-
-  SigninBloc(String email, String password) {
-    signinApi.login(email, password).then((token) {
-      token = token;
+  registration(String email, String fullname, String password){
+    signupApi.registration(email, fullname, password).then((user) {
+      user = user;
       _syncController.sink
-          .add(token);
+          .add(user);
     });
+  }
+
+  SignupBloc() {
+    
   }
 
   void dispose() {

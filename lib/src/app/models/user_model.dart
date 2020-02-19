@@ -11,5 +11,4 @@ class UserModel {
       email  = json["email"],
       fullname = json["fullname"],
       lastSeen  = json["last_seen"];
-      
 }

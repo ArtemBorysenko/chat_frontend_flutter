@@ -111,6 +111,9 @@ class _DialogPage extends State<DialogPage> {
                     decoration: InputDecoration(
                       hintText: "Type in here"
                     ),
+                    onSubmitted: (str){
+                      print('STR: $str');
+                    },
                   ),
                   ]
                 ),

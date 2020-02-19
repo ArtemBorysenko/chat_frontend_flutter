@@ -3,7 +3,10 @@ import 'package:provider/provider.dart';
 
 import 'package:chat_frontend_flutter/src/app/ui/pages/dialogs_page.dart';
 import 'package:chat_frontend_flutter/src/app/core/blocs/dialogs_bloc.dart';
+import 'package:chat_frontend_flutter/src/app/core/blocs/auth/signup_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/core/blocs/dialog_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 import 'package:chat_frontend_flutter/src/app/ui/pages/auth/login_page.dart';
 import 'package:chat_frontend_flutter/src/app/ui/pages/auth/registration_page.dart';
@@ -17,6 +20,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // _func(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +52,8 @@ class HomePage extends StatelessWidget {
             RaisedButton(
               child: Text('Dialog'),
               onPressed: () {
-                _openPageDialog(context);
+                // _openPageDialog(context);
+                _func(context);
               },
             ),
                 ]
@@ -57,6 +63,24 @@ class HomePage extends StatelessWidget {
 }
 }
 
+
+_func(context) async {
+  final prefs = await SharedPreferences.getInstance();
+  print("prefs.getString('accessToken').isNotEmpty : ${prefs.getString('accessToken').isNotEmpty}");
+  if(prefs.getString('accessToken').isNotEmpty) { Navigator
+        .of(context)
+        .push(MaterialPageRoute(builder: (BuildContext context) {
+
+ return Provider<DialogsBloc>(
+        create: (context) => DialogsBloc(),
+        dispose: (context, value) => value.dispose(),
+        child: DialogsPage(),
+      );
+    }));
+  }
+  else
+  print("token");
+}
 
   void _openPageLogin(BuildContext context) {
     Navigator
@@ -68,7 +92,13 @@ class HomePage extends StatelessWidget {
     void _openPageRegistration(BuildContext context) {
     Navigator
         .of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) => RegistrationPage()
+        .push(MaterialPageRoute(builder: (BuildContext context){
+          return Provider<SignupBloc>(
+        create: (context) => SignupBloc(),
+        dispose: (context, value) => value.dispose(),
+        child: RegistrationPage(),
+      );
+        }
     ));
   }
 

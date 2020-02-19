@@ -40,7 +40,7 @@ class _DialogsPageState extends State<DialogsPage> {
               new DrawerHeader(
                 child: new Text("Drawer Header"),
                 decoration: new BoxDecoration(
-                  color: Colors.blue,
+                color: Colors.blue,
                 ),
               ),
             ],
