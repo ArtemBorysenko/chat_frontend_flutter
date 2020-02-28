@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 class SigninApi {
 
-  static const String baseUrl = '10.0.2.2:3003';//chat-backend-koa.herokuapp.com
+  static const String baseUrl = 'chat-backend-koa.herokuapp.com';//chat-backend-koa.herokuapp.com
   final _httpClient = new HttpClient();
   
 Future<UserModel> registration(String email, String fullname, String password) async {

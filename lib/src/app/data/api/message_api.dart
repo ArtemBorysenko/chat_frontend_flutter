@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 class MessageApi {
 
-  static const String baseUrl = '10.0.2.2:3003';//chat-backend-koa.herokuapp.com
+  static const String baseUrl = 'chat-backend-koa.herokuapp.com';//chat-backend-koa.herokuapp.com
   final _httpClient = new HttpClient();
   
 Future<MessageModel> create(String dialogId, String text) async {
@@ -26,7 +26,6 @@ Future<MessageModel> create(String dialogId, String text) async {
 
   return messageList;
 }
-
 
 Future<http.Response> _getRequest(Uri uri, Map<String, String> bodyParameters) async {
   http.Response response = await http.Client().post(uri,

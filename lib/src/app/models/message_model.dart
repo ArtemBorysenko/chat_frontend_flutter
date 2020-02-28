@@ -3,7 +3,7 @@ class MessageModel {
   final String id;
   final String text;
   final bool reader;  
-  final String lastSeen;
+  final String lastSeen; //TODO DATE
   final String dialog;
   final String user;
 
@@ -16,5 +16,4 @@ class MessageModel {
       lastSeen = json["user"]["last_seen"],
       dialog = json["dialog"]["_id"],
       user  = json["user"]["fullname"];
-      
 }

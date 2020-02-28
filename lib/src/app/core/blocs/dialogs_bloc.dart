@@ -17,7 +17,7 @@ class DialogsBloc {
 
 // --> GET /socket.io/?EIO=3&transport=polling 404 1ms - 10.0.2.2 no proxy and with
 socketFunc(){
-IO.Socket socket = IO.io('http://10.0.2.2:3003/', <String, dynamic>{
+IO.Socket socket = IO.io('https://chat-backend-koa.herokuapp.com/', <String, dynamic>{
     'transports': ['websocket'],
   });
 

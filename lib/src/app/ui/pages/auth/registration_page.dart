@@ -9,7 +9,6 @@ class RegistrationPage extends StatefulWidget {
   
   @override
   State<StatefulWidget> createState() => _RegistrationPageState();
-
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {

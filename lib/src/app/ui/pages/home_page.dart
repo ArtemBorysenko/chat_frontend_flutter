@@ -107,19 +107,11 @@ void _openPageDialogs(BuildContext context) async {
      Navigator
         .of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
-
- return MultiProvider(
-  providers: [
-    Provider<DialogsBloc>(create: (context) => DialogsBloc()),
-    // Provider<DialogBloc>(create: (context) => DialogBloc()),
-  ],
-   child: DialogsPage(),
-   );
-      // return Provider<DialogsBloc>(
-      //   create: (context) => DialogsBloc(),
-      //   dispose: (context, value) => value.dispose(),
-      //   child: DialogsPage(),
-      // );
+    return Provider<DialogsBloc>(
+        create: (context) => DialogsBloc(),
+        dispose: (context, value) => value.dispose(),
+        child: DialogsPage(),
+      );
     }));
   }
 
@@ -133,5 +125,3 @@ void _openPageDialogs(BuildContext context) async {
   // void _openPageDialogs(BuildContext context) async {
   //   dialogsApi.getDialogs();
   // }
-
-  

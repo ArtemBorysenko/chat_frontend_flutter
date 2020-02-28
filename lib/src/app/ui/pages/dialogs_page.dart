@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'package:chat_frontend_flutter/src/app/core/blocs/dialogs_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/core/blocs/dialog_bloc.dart';
+import 'package:chat_frontend_flutter/src/app/core/blocs/message_bloc.dart';
 
 import 'package:chat_frontend_flutter/src/app/ui/pages/dialog_page.dart';
 
@@ -92,11 +93,17 @@ void _openPageDialog(BuildContext context, item) {
 
     Navigator.of(context).push(MaterialPageRoute(
       builder: (BuildContext context) {
-        return Provider<DialogBloc>(
-        create: (context) => DialogBloc(item.id),
-        dispose: (context, value) => value.dispose(),
-        child: DialogPage(),
-      );}
-    ));
-
+        return MultiProvider(
+  providers: [
+    Provider<DialogBloc>(create: (context) => DialogBloc(item.id)),
+    Provider<MessageBloc>(create: (context) => MessageBloc()),
+  ],
+   child: DialogPage(),
+   );
+      //   return Provider<DialogBloc>(
+      //   create: (context) => DialogBloc(item.id),
+      //   dispose: (context, value) => value.dispose(),
+      //   child: DialogPage(),
+      // );
+      }));
   }

@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-
 import 'package:chat_frontend_flutter/src/app/core/blocs/dialog_bloc.dart';
+import 'package:chat_frontend_flutter/src/app/core/blocs/message_bloc.dart';
 
 class DialogPage extends StatefulWidget {
 
@@ -24,50 +24,11 @@ class _DialogPage extends State<DialogPage> {
 
   @override
   Widget build(BuildContext context) {
-// // --> GET /socket.io/?EIO=3&transport=polling 404 1ms - 10.0.2.2 no proxy and with
-// IO.Socket socket = IO.io('http://10.0.2.2:3003');
-// // socket.emit('connect');
-
-
-// socket.emit('send_message', (_) {
-//      print('connection');
-//      socket.emit('send_message', _socketStatus);
-//     });
-
-//     socket.emit('send_message', (_) {
-//      print('connect');
-//      socket.emit('send_message', _socketStatus);
-//     });
-    
-//      print('BuildContext _DialogPage');
-
-//     socket.emit('send_message', (_) => print('disconnect'));
-
-//     socket.emit('disconnect', (_) => print('disconnect'));
-
-//     SocketIO socketIO;
-// //GET /socket.io/?EIO=3&userId=21031&transport=websocket 404 1ms -
-//     _connectSocket01() { 
-// 	 socketIO = SocketIOManager()
-//    .createSocketIO(
-//      "http://10.0.2.2:3003",
-//       "/",
-//       query: "userId=21031",
-//       socketStatusCallback: _socketStatus); 
-
-// 	socketIO.init(); 
-
-// 	socketIO.subscribe("send_message", _socketStatus); 
-
-//   socketIO.sendMessage("send_message", _socketStatus);
-
-// 	socketIO.connect(); 
-
-// }
-
-// _connectSocket01();
 
   final DialogBloc dialogBloc = Provider.of<DialogBloc>(context);
+  final MessageBloc messageBloc = Provider.of<MessageBloc>(context);
+
+  String dialogId = '';
 
     return Scaffold(
       appBar: AppBar(
@@ -96,6 +57,7 @@ class _DialogPage extends State<DialogPage> {
                    if (!snapshot.hasData) return Text('Loading...');
                     return ListView(
                       children: snapshot.data.map<Widget>((item) {
+                        dialogId = item.dialog;
                         return ListTile(
                            leading: CircleAvatar(
                             // backgroundImage: ,
@@ -112,6 +74,7 @@ class _DialogPage extends State<DialogPage> {
                       hintText: "Type in here"
                     ),
                     onSubmitted: (str){
+                      messageBloc.create(dialogId, str);
                       print('STR: $str');
                     },
                   ),

@@ -9,7 +9,7 @@ import 'package:chat_frontend_flutter/src/app/data/api/message_api.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-class SigninBloc {
+class MessageBloc {
   StreamController _syncController =
       StreamController<String>.broadcast();
   Stream get outDialogBloc => _syncController.stream;
@@ -25,7 +25,7 @@ class SigninBloc {
     });
   }
 
-  SigninBloc(String email, String password) {
+  MessageBloc() {
     
   }
 
