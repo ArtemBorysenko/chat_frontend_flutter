@@ -5,85 +5,84 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import 'package:chat_frontend_flutter/src/app/core/blocs/dialog_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/core/blocs/message_bloc.dart';
+import 'package:chat_frontend_flutter/src/app/models/message_model.dart';
 
 class DialogPage extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() => _DialogPage();
-  
 }
 
 class _DialogPage extends State<DialogPage> {
-
-  
-
   _socketStatus() {
     print('socket run');
   }
 
-
   @override
   Widget build(BuildContext context) {
+    final DialogBloc dialogBloc = Provider.of<DialogBloc>(context);
+    // final MessageBloc messageBloc = Provider.of<MessageBloc>(context);
 
-  final DialogBloc dialogBloc = Provider.of<DialogBloc>(context);
-  final MessageBloc messageBloc = Provider.of<MessageBloc>(context);
-
-  String dialogId = '';
+    String dialogId = '';
 
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+            icon: Icon(
               Icons.arrow_back,
-          ), 
-          onPressed: () => Navigator.pop(context) 
-          ),
+            ),
+            onPressed: () => Navigator.pop(context)),
         title: Text("Dialog"),
         actions: <Widget>[
-            IconButton(icon: Icon(Icons.more_vert), onPressed: () => null )
-          ],
+          IconButton(icon: Icon(Icons.more_vert), onPressed: () => null)
+        ],
       ),
       body: Container(
           child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Expanded( 
-                 child: StreamBuilder(
-                stream: dialogBloc.outDialogBloc,
-                builder: (BuildContext context, snapshot){  
-                   if (!snapshot.hasData) return Text('Loading...');
-                    return ListView(
-                      children: snapshot.data.map<Widget>((item) {
-                        dialogId = item.dialog;
-                        return ListTile(
-                           leading: CircleAvatar(
-                            // backgroundImage: ,
-                            ),
-                          title: Text(item.user),
-                          subtitle: Text(item.text),
+              child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+          Expanded(
+              child: StreamBuilder<List<MessageModel>>(
+                  stream: dialogBloc.outDialogBloc,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<MessageModel>> snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return ListView.builder(
+                      itemBuilder: (BuildContext contex, int index) {
+                        dialogId = snapshot.data[index].dialog;
+                        return Dismissible(
+                          key: Key(snapshot.data[index].user),
+                          onDismissed: (direction) {
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    "${snapshot.data[index].id} dismissed")
+                                    ));
+                          },
+                          background: Container(color: Colors.blue),
+                          child: ListTile(
+                            title: Text('${snapshot.data[index].user}'),
+                            subtitle: Text('${snapshot.data[index].text}'),
+                          ),
                         );
-                        }).toList()
+                      },
+                      itemCount:
+                          (snapshot.data == null ? 0 : snapshot.data.length),
                     );
-                })
-          ),
+                  })),
           TextField(
-                    decoration: InputDecoration(
-                      hintText: "Type in here"
-                    ),
-                    onSubmitted: (str){
-                      messageBloc.create(dialogId, str);
-                      print('STR: $str');
-                    },
-                  ),
-                  ]
-                ),
-            )
-          )
-        ),
-        floatingActionButton: FloatingActionButton(
+            decoration: InputDecoration(hintText: "Type in here"),
+            onSubmitted: (str) {
+              dialogBloc.create(dialogId, str);
+            },
+          ),
+        ]),
+      ))),
+      floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.check),
         onPressed: () {
           dialogBloc.getDialogBloc.add(null);

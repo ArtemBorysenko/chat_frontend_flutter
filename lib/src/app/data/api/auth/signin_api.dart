@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 class SigninApi {
 
-  static const String baseUrl = 'chat-backend-koa.herokuapp.com';
+  static const String baseUrl = '10.0.2.2:3003';
   final _httpClient = new HttpClient();
   
 Future<String> login(String email, String password) async {
@@ -28,8 +28,9 @@ Future<http.Response> _getRequest(Uri uri, Map<String, String> bodyParameters) a
   body: bodyParameters);
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString("accessToken", response.body);
 
-  print('AccessToken: ${response.body}');
+  // print('AccessToken: ${response.body}');
 
   return response;
   }

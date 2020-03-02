@@ -9,4 +9,17 @@ class MessageListModel {
     }).toList();
   }
 
+  add(dynamic json){
+    print('message 1 ${json.messages[0].id}');
+    MessageModel msg = new MessageModel(json.messages[0].id, json.messages[0].text,
+      json.messages[0].reader,
+      json.messages[0].lastSeen,
+      json.messages[0].dialog,
+      json.messages[0].user);
+
+    print('message 2 $msg');
+
+
+    messages.add(msg);
+  }
 }

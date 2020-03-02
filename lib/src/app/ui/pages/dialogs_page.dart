@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:chat_frontend_flutter/src/app/core/blocs/dialogs_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/core/blocs/dialog_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/core/blocs/message_bloc.dart';
+import 'package:chat_frontend_flutter/src/app/models/dialogs_model.dart';
 
 import 'package:chat_frontend_flutter/src/app/ui/pages/dialog_page.dart';
 
@@ -51,27 +52,35 @@ class _DialogsPageState extends State<DialogsPage> {
         child: Column(
           children: <Widget>[
           Expanded( 
-            child: StreamBuilder(
+            child: StreamBuilder<List<DialogModel>>(
               // initialData: dialogsBloc.initionalData(),
               stream: dialogsBloc.outDialogsBloc,
-              builder: (BuildContext context, snapshot){  
-                
-                 if (!snapshot.hasData) return new Text('Loading...');
-                  return new ListView(
-                    children: snapshot.data.map<Widget>((item) {
-                      return new ListTile(
+              builder: (BuildContext context,
+              AsyncSnapshot<List<DialogModel>> snapshot) {  
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                 }
+                  return ListView.builder(
+                    itemBuilder: (BuildContext context, int index) {
+                    // snapshot.data.map<Widget>((item) {
+                      return ListTile(
                          leading: CircleAvatar(
                           // backgroundImage: ,
                           ),
-                        title: new Text('Login: ${item.partner} ${item.id}'),
-                        subtitle: new Text(item.lastMessage),
+                        title: Text('Login: ${snapshot.data[index].partner} ${snapshot.data[index].id}'),
+                        subtitle: Text(snapshot.data[index].lastMessage),
                         onTap: () {
-                           _openPageDialog(context, item); },
+                           _openPageDialog(context, snapshot.data[index]); },
                       );
-                      }).toList()
+                      // }).toList();
+                    },
+                    itemCount:
+                        (snapshot.data == null ? 0 : snapshot.data.length),
                   );
               })
-          ),
+          ),  
         ],
         ),
     ),
@@ -85,6 +94,40 @@ class _DialogsPageState extends State<DialogsPage> {
   }
 }
 
+// Widget _buildDialogList (
+//       BuildContext context,
+//       DialogsBloc dialogsBloc,
+//       int index,
+//       List<DialogModel> dialogsList,
+//       Stream<List<DialogModel>> favoritesStream
+// ){
+//   final DialogModel dialogList =
+//         (dialogsList != null && dialogsList.length > index)
+//             ? dialogsList[index]
+//             : null;
+
+//   if (dialogList == null) {
+//       return Center(
+//         child: CircularProgressIndicator(),
+//       );
+//   }
+
+//   return MovieCardWidget(
+//         key: Key('movie_${movieCard.id}'),
+//         movieCard: movieCard,
+//         favoritesStream: favoritesStream,
+//         onPressed: () {
+//           Navigator
+//               .of(context)
+//               .push(MaterialPageRoute(builder: (BuildContext context) {
+//             return DialogPage(
+//               data: movieCard,
+//             );
+//           }));
+//         });
+
+// }
+
 void _openPageDialog(BuildContext context, item) {
 
     // DialogApi dialogApi = DialogApi();
@@ -96,7 +139,7 @@ void _openPageDialog(BuildContext context, item) {
         return MultiProvider(
   providers: [
     Provider<DialogBloc>(create: (context) => DialogBloc(item.id)),
-    Provider<MessageBloc>(create: (context) => MessageBloc()),
+    // Provider<MessageBloc>(create: (context) => MessageBloc()),
   ],
    child: DialogPage(),
    );

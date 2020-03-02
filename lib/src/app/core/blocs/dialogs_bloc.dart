@@ -52,8 +52,7 @@ socket.emit('connection', "connn");
           .add(UnmodifiableListView<DialogModel>(_dialogsList.dialogs));
     });
   
-  
-    socketFunc();
+    // socketFunc();
   }
 
   DialogListModel initionalData() {
@@ -61,7 +60,7 @@ socket.emit('connection', "connn");
     dialogsApi.getDialogs().then((list) {
       data = list;
     });
-    print(data);
+    // print(data);
     return data;
   }
 

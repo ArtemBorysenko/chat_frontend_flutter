@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 
 class DialogsApi {
   // String token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlNGJmYTc1YjExZWVmMDAxN2NjNWM1NCIsIm5hbWUiOiJIZXJva3UiLCJlbWFpbCI6Imhlcm9rdVRFU1RAdGVzdC5pbyIsImlhdCI6MTU4MjAzNzYyNX0.9nK5nngIy_MiwszPvNHNJ4JjDRKvxR0n-Vw6AZacjx0';
-  static const String baseUrl = 'chat-backend-koa.herokuapp.com';//chat-backend-koa.herokuapp.com
+  static const String baseUrl = '10.0.2.2:3003';//chat-backend-koa.herokuapp.com
   final _httpClient = new HttpClient();
 
 Future<DialogListModel> getDialogs() async {
