@@ -6,33 +6,34 @@ import 'package:provider/provider.dart';
 
 import 'package:chat_frontend_flutter/src/app/core/blocs/dialogs_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/core/blocs/dialog_bloc.dart';
+import 'package:chat_frontend_flutter/src/app/core/blocs/users_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/core/blocs/message_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/models/dialogs_model.dart';
+import 'package:chat_frontend_flutter/src/app/models/user_model.dart';
 
 import 'package:chat_frontend_flutter/src/app/ui/pages/dialog_page.dart';
 
-class DialogsPage extends StatefulWidget {
+class UsersPage extends StatefulWidget {
   static String tag = "Login Page";
   
   @override
-  State<StatefulWidget> createState() => _DialogsPageState();
+  State<StatefulWidget> createState() => _UsersPageState();
 
 }
 
-class _DialogsPageState extends State<DialogsPage> {
+class _UsersPageState extends State<UsersPage> {
   
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  DialogsBloc dialogsBloc;
 
   @override
   Widget build(BuildContext context){
 
-  dialogsBloc = Provider.of<DialogsBloc>(context);
+  final UsersBloc usersBloc = Provider.of<UsersBloc>(context);
 
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-          title: Text("Dialogs"),
+          title: Text("users"),
           actions: <Widget>[
             IconButton(icon: Icon(Icons.search), onPressed: () => null )
           ],
@@ -53,11 +54,11 @@ class _DialogsPageState extends State<DialogsPage> {
         child: Column(
           children: <Widget>[
           Expanded( 
-            child: StreamBuilder<List<DialogModel>>(
+            child: StreamBuilder<List<UserModel>>(
               // initialData: dialogsBloc.initionalData(),
-              stream: dialogsBloc.outDialogsBloc,
+              stream: usersBloc.outDialogsBloc,
               builder: (BuildContext context,
-              AsyncSnapshot<List<DialogModel>> snapshot) {  
+              AsyncSnapshot<List<UserModel>> snapshot) {  
                   if (!snapshot.hasData) {
                     return Center(
                       child: CircularProgressIndicator(),
@@ -70,8 +71,8 @@ class _DialogsPageState extends State<DialogsPage> {
                          leading: CircleAvatar(
                           // backgroundImage: ,
                           ),
-                        title: Text('Login: ${snapshot.data[index].partner} ${snapshot.data[index].id}'),
-                        subtitle: Text(snapshot.data[index].lastMessage),
+                        title: Text('${snapshot.data[index].email}'),
+                        subtitle: Text('${snapshot.data[index].lastSeen}'),
                         onTap: () {
                            _openPageDialog(context, snapshot.data[index]); },
                       );
@@ -88,16 +89,10 @@ class _DialogsPageState extends State<DialogsPage> {
     floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.check),
         onPressed: () {
-          dialogsBloc.getDialogsBloc.add(null);
+          usersBloc.getDialogsBloc.add(null);
         },
       ),
     );
-  }
-
-      @override
-  void dispose() {
-    dialogsBloc.dispose();
-    super.dispose();
   }
 }
 
@@ -145,7 +140,7 @@ void _openPageDialog(BuildContext context, item) {
       builder: (BuildContext context) {
         return MultiProvider(
   providers: [
-    Provider<DialogBloc>(create: (context) => DialogBloc(item.partnerId)),
+    Provider<DialogBloc>(create: (context) => DialogBloc(item.id)),
     // Provider<MessageBloc>(create: (context) => MessageBloc()),
   ],
    child: DialogPage(),

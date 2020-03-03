@@ -13,10 +13,11 @@ class DialogApi {
   static const String baseUrl = '10.0.2.2:3003';//chat-backend-koa.herokuapp.com
   final _httpClient = new HttpClient();
   
-Future<MessageListModel> getDialog(String dialogId) async {
+Future<MessageListModel> getDialog(String partnerId) async {
   var queryParameters = {
-  'dialog': dialogId,
+  'partner': partnerId,
 };
+
   var uri = Uri.http(baseUrl,'messages', queryParameters);
 
   http.Response response = await _getRequest(uri);
@@ -33,6 +34,7 @@ Future<http.Response> _getRequest(Uri uri) async {
 
   http.Response response = await http.Client().get(uri, 
   headers: {'Content-type': 'application/json', 'authorization': 'Bearer $token'});
+
 
   return response;
   }

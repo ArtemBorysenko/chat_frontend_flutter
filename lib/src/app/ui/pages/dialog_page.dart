@@ -13,13 +13,12 @@ class DialogPage extends StatefulWidget {
 }
 
 class _DialogPage extends State<DialogPage> {
-  _socketStatus() {
-    print('socket run');
-  }
+
+   DialogBloc dialogBloc;
 
   @override
   Widget build(BuildContext context) {
-    final DialogBloc dialogBloc = Provider.of<DialogBloc>(context);
+    dialogBloc = Provider.of<DialogBloc>(context);
     // final MessageBloc messageBloc = Provider.of<MessageBloc>(context);
 
     String dialogId = '';
@@ -82,12 +81,12 @@ class _DialogPage extends State<DialogPage> {
           ),
         ]),
       ))),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.check),
-        onPressed: () {
-          dialogBloc.getDialogBloc.add(null);
-        },
-      ),
     );
   }
+
+  @override
+  void dispose() {
+    dialogBloc.dispose();
+    super.dispose();
+}
 }

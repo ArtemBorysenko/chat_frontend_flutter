@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:collection';
 import 'package:rxdart/rxdart.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:chat_frontend_flutter/src/app/models/message_model.dart';
 import 'package:chat_frontend_flutter/src/app/models/message_list_model.dart';
@@ -11,8 +14,7 @@ import 'package:chat_frontend_flutter/src/app/data/api/dialog_api.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class DialogBloc {
-  IO.Socket socket =
-      IO.io('https://chat-backend-koa.herokuapp.com/', <String, dynamic>{
+  IO.Socket socket = IO.io('http://10.0.2.2:3003/', <String, dynamic>{
     'transports': ['websocket'],
   });
 
@@ -32,34 +34,27 @@ class DialogBloc {
       _syncController.sink
           .add(UnmodifiableListView<MessageModel>(_dialogsList.messages));
     });
-
-    // socket.emit('connection', "connn");
-
-    // socket.on('send_message', (message) {
-    //   print('send_message ${message}');
-    // });
-
-    // socket.emit('send_message', "_socketStatus");
-
-    // socket.emit('disconnect', "(_) => print('disconnect')");
-
-    // socket.on('SERVER:MESSAGE_NEW', (data) {
-    //   print(data);
-    // });
   }
 
   create(dialogId, text) {
     messageApi.create(dialogId, text).then((message) {
-      _dialogsList.add(message);
-      
-      print('_dialogsList $_dialogsList');
-      _syncController.sink
+
+      socket.on('SERVER:MESSAGE_NEW', (data) {
+        MessageListModel messageList =
+            MessageListModel.fromJSON(json.decode('[$data]'));
+        _dialogsList.add(messageList);
+
+        _syncController.sink
           .add(UnmodifiableListView<MessageModel>(_dialogsList.messages));
+      });
+
+      socket.emit('USER:MESSAGE_NEW', 'command USER:MESSA GE_NEW');
     });
   }
 
   void dispose() {
     _syncController.close();
     _cmdController.close();
+    socket.disconnect();
   }
 }

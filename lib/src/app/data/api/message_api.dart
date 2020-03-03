@@ -22,7 +22,7 @@ Future<MessageListModel> create(String dialogId, String text) async {
   var uri = Uri.http(baseUrl,'/messages/');
 
   http.Response response = await _getRequest(uri, bodyParameters);
-
+  
   MessageListModel messageList = MessageListModel.fromJSON(json.decode(response.body));
 
   return messageList;

@@ -10,29 +10,29 @@ import 'package:chat_frontend_flutter/src/app/data/api/dialogs_api.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class DialogsBloc {
-    
   _socketStatus() {
     print('socket run');
   }
 
 // --> GET /socket.io/?EIO=3&transport=polling 404 1ms - 10.0.2.2 no proxy and with
-socketFunc(){
-IO.Socket socket = IO.io('https://chat-backend-koa.herokuapp.com/', <String, dynamic>{
-    'transports': ['websocket'],
-  });
-
-socket.emit('connection', "connn");
-
-  socket.on('send_message', (message) {
-     print('send_message ${message}');
+  socketFunc() {
+    IO.Socket socket =
+        IO.io('https://chat-backend-koa.herokuapp.com/', <String, dynamic>{
+      'transports': ['websocket'],
     });
 
-  socket.emit('send_message', "_socketStatus");
+    socket.emit('connection', "connn");
 
-  socket.emit('disconnect', "(_) => print('disconnect')");
+    socket.on('send_message', (message) {
+      print('send_message ${message}');
+    });
 
-  // socket.disconnect();
-}
+    socket.emit('send_message', "_socketStatus");
+
+    socket.emit('disconnect', "(_) => print('disconnect')");
+
+    // socket.disconnect();
+  }
 
   StreamController<List<DialogModel>> _syncController =
       StreamController<List<DialogModel>>.broadcast();
@@ -45,13 +45,12 @@ socket.emit('connection', "connn");
   DialogListModel _dialogsList;
 
   DialogsBloc() {
-
     dialogsApi.getDialogs().then((list) {
       _dialogsList = list;
-    _syncController.sink
+      _syncController.sink
           .add(UnmodifiableListView<DialogModel>(_dialogsList.dialogs));
     });
-  
+
     // socketFunc();
   }
 
