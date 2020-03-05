@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:chat_frontend_flutter/src/app/core/blocs/dialogs_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/ui/pages/home_page.dart';
-
+//ЧЕ за говно это не js.Пиши на js
 Future<void> main() async {
   return runApp(
     MultiProvider(
