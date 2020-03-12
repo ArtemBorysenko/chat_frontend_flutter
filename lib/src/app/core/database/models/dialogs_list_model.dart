@@ -1,4 +1,4 @@
-import 'package:chat_frontend_flutter/src/app/models/dialogs_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/dialogs_model.dart';
 
 class DialogListModel {
   List<DialogModel> dialogs = <DialogModel>[];

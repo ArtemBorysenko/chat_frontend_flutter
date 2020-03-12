@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:chat_frontend_flutter/src/app/models/dialogs_list_model.dart';
-import 'package:chat_frontend_flutter/src/app/models/user_list_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/dialogs_list_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/user_list_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/widgets.dart';
@@ -13,7 +13,7 @@ class UsersApi {
   static const String baseUrl = '10.0.2.2:3003';//chat-backend-koa.herokuapp.com
 
 Future<UserListModel> getUsers() async {
-  var uri = Uri.http(baseUrl,'/user/find/');
+  var uri = Uri.http(baseUrl,'api/v1/user/find/');
   
   http.Response response = await _getRequest(uri);
 

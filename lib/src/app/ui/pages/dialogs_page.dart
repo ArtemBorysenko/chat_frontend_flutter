@@ -7,9 +7,16 @@ import 'package:provider/provider.dart';
 import 'package:chat_frontend_flutter/src/app/core/blocs/dialogs_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/core/blocs/dialog_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/core/blocs/message_bloc.dart';
-import 'package:chat_frontend_flutter/src/app/models/dialogs_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/dialogs_model.dart';
 
 import 'package:chat_frontend_flutter/src/app/ui/pages/dialog_page.dart';
+
+// prefs.then((val) {
+//       if (val.get('count') != null) {
+//         _counter = val.getInt('count') ?? 1;
+//       } else {
+//         _counter = 1;
+//       }
 
 class DialogsPage extends StatefulWidget {
   static String tag = "Login Page";
@@ -53,6 +60,9 @@ class _DialogsPageState extends State<DialogsPage> {
         child: Column(
           children: <Widget>[
           Expanded( 
+            // child: StreamProvider<List<DialogModel>>.value(
+            //   value:
+            //   child: ,),
             child: StreamBuilder<List<DialogModel>>(
               // initialData: dialogsBloc.initionalData(),
               stream: dialogsBloc.outDialogsBloc,

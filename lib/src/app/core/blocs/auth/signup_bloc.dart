@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:collection';
 import 'package:rxdart/rxdart.dart';
 
-import 'package:chat_frontend_flutter/src/app/models/user_model.dart';
-import 'package:chat_frontend_flutter/src/app/models/message_model.dart';
-import 'package:chat_frontend_flutter/src/app/models/message_list_model.dart';
-import 'package:chat_frontend_flutter/src/app/data/api/auth/signup_api.dart';
-import 'package:chat_frontend_flutter/src/app/data/api/dialog_api.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/user_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/message_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/message_list_model.dart';
+import 'package:chat_frontend_flutter/src/app/api/auth/signup_api.dart';
+import 'package:chat_frontend_flutter/src/app/api/dialog_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 

@@ -19,6 +19,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     // _func(context);
 
     return Scaffold(
@@ -48,8 +49,8 @@ class HomePage extends StatelessWidget {
               RaisedButton(
                 child: Text('Users'),
                 onPressed: () {
-                  _openPageUser(context);
-                  // _func(context);
+                  // _openPageUser(context);
+                  _func(context);
                 },
               ),
             ]),
@@ -60,9 +61,8 @@ class HomePage extends StatelessWidget {
 
 _func(context) async {
   final prefs = await SharedPreferences.getInstance();
-  print(
-      "prefs.getString('accessToken').isNotEmpty : ${prefs.getString('accessToken').isNotEmpty}");
-  if (prefs.getString('accessToken').isNotEmpty) {
+  print("prefs.getString('accessToken') : ${prefs.getString('accessToken')}");
+  if (prefs.getString('accessToken') != null) {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
       return Provider<DialogsBloc>(
@@ -71,8 +71,7 @@ _func(context) async {
         child: DialogsPage(),
       );
     }));
-  } else
-    print("token");
+  }
 }
 
 void _openPageLogin(BuildContext context) {
@@ -92,6 +91,7 @@ void _openPageRegistration(BuildContext context) {
 
 void _openPageDialogs(BuildContext context) async {
   Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+    // return DialogsPage();
     return Provider<DialogsBloc>(
       create: (context) => DialogsBloc(),
       dispose: (context, value) => value.dispose(),

@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:chat_frontend_flutter/src/app/models/message_list_model.dart';
-import 'package:chat_frontend_flutter/src/app/models/message_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/message_list_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/message_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
@@ -19,7 +19,7 @@ Future<MessageListModel> create(String dialogId, String text) async {
     "text": text,
   };
 
-  var uri = Uri.http(baseUrl,'/messages/');
+  var uri = Uri.http(baseUrl,'api/v1/messages');
 
   http.Response response = await _getRequest(uri, bodyParameters);
   

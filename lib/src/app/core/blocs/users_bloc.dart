@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:collection';
-import 'package:chat_frontend_flutter/src/app/models/user_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/user_model.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'package:chat_frontend_flutter/src/app/models/dialogs_model.dart';
-import 'package:chat_frontend_flutter/src/app/models/dialogs_list_model.dart';
-import 'package:chat_frontend_flutter/src/app/models/user_list_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/dialogs_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/dialogs_list_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/user_list_model.dart';
 
-import 'package:chat_frontend_flutter/src/app/data/api/dialogs_api.dart';
-import 'package:chat_frontend_flutter/src/app/data/api/users_api.dart';
+import 'package:chat_frontend_flutter/src/app/api/dialogs_api.dart';
+import 'package:chat_frontend_flutter/src/app/api/users_api.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 

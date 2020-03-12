@@ -8,8 +8,8 @@ import 'package:chat_frontend_flutter/src/app/core/blocs/dialogs_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/core/blocs/dialog_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/core/blocs/users_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/core/blocs/message_bloc.dart';
-import 'package:chat_frontend_flutter/src/app/models/dialogs_model.dart';
-import 'package:chat_frontend_flutter/src/app/models/user_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/dialogs_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/user_model.dart';
 
 import 'package:chat_frontend_flutter/src/app/ui/pages/dialog_page.dart';
 

@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:chat_frontend_flutter/src/app/models/user_model.dart';
-import 'package:chat_frontend_flutter/src/app/models/message_list_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/user_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/message_list_model.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -19,7 +19,7 @@ Future<UserModel> registration(String email, String fullname, String password) a
     "password": password,
   };
 
-  var uri = Uri.http(baseUrl,'/auth/signup');
+  var uri = Uri.http(baseUrl,'api/v1/auth/signup');
 
   http.Response response = await _getRequest(uri, bodyParameters);
 

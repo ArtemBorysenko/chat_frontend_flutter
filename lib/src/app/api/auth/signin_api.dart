@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:chat_frontend_flutter/src/app/models/message_list_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/message_list_model.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -18,9 +18,11 @@ Future<String> login(String email, String password) async {
     "password": password,
   };
 
-  var uri = Uri.http(baseUrl,'/auth/signin');
+  var uri = Uri.http(baseUrl,'api/v1/auth/signin');
 
-  await _getRequest(uri, bodyParameters);
+  http.Response response = await _getRequest(uri, bodyParameters);
+
+  return response.body;
 }
 
 Future<http.Response> _getRequest(Uri uri, Map<String, String> bodyParameters) async {

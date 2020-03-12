@@ -3,13 +3,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:chat_frontend_flutter/src/app/models/message_list_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/message_list_model.dart';
 
 import 'package:http/http.dart' as http;
 
 class DialogApi {
 
-  // String token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlNGJmYTc1YjExZWVmMDAxN2NjNWM1NCIsIm5hbWUiOiJIZXJva3UiLCJlbWFpbCI6Imhlcm9rdVRFU1RAdGVzdC5pbyIsImlhdCI6MTU4MjAzNzYyNX0.9nK5nngIy_MiwszPvNHNJ4JjDRKvxR0n-Vw6AZacjx0';
   static const String baseUrl = '10.0.2.2:3003';//chat-backend-koa.herokuapp.com
   final _httpClient = new HttpClient();
   
@@ -18,9 +17,10 @@ Future<MessageListModel> getDialog(String partnerId) async {
   'partner': partnerId,
 };
 
-  var uri = Uri.http(baseUrl,'messages', queryParameters);
+  var uri = Uri.http(baseUrl,'api/v1/messages', queryParameters);//TODO v2
 
   http.Response response = await _getRequest(uri);
+  // print(response.body);
 
   MessageListModel list = MessageListModel.fromJSON(json.decode(response.body));
 

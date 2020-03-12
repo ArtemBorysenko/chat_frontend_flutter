@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:chat_frontend_flutter/src/app/models/message_list_model.dart';
-import 'package:chat_frontend_flutter/src/app/models/message_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/message_list_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/message_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
@@ -17,7 +17,7 @@ class MessageApi {
     };
 
     var uri =
-        Uri.http(baseUrl, '/messages/?id=${queryParameters['message_id']}');
+        Uri.http(baseUrl, 'api/v1/messages/?id=${queryParameters['message_id']}');
 
     http.Response response = await _getRequest(uri, queryParameters);
 

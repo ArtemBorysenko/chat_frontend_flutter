@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:chat_frontend_flutter/src/app/models/dialogs_list_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/dialogs_list_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/widgets.dart';
@@ -14,7 +14,7 @@ class DialogsApi {
   final _httpClient = new HttpClient();
 
 Future<DialogListModel> getDialogs() async {
-  var uri = Uri.http(baseUrl,'dialogs');
+  var uri = Uri.http(baseUrl,'api/v1/dialogs');
   
   http.Response response = await _getRequest(uri);
 

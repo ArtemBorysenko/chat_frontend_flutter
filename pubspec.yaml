@@ -17,6 +17,8 @@ dependencies:
   http:
   socket_io_client:
   shared_preferences:
+  sqflite:
+  path_provider:
 
 dev_dependencies:
   flutter_test:

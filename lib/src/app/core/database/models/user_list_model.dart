@@ -1,4 +1,4 @@
-import 'package:chat_frontend_flutter/src/app/models/user_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/user_model.dart';
 
 class UserListModel {
   List<UserModel> users = <UserModel>[];

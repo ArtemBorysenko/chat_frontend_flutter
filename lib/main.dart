@@ -5,6 +5,7 @@ import 'package:chat_frontend_flutter/src/app/core/blocs/dialogs_bloc.dart';
 import 'package:chat_frontend_flutter/src/app/ui/pages/home_page.dart';
 
 Future<void> main() async {
+  
   return runApp(
     MultiProvider(
   providers: [

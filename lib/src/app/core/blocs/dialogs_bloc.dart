@@ -3,36 +3,41 @@ import 'dart:io';
 import 'dart:collection';
 import 'package:rxdart/rxdart.dart';
 
-import 'package:chat_frontend_flutter/src/app/models/dialogs_model.dart';
-import 'package:chat_frontend_flutter/src/app/models/dialogs_list_model.dart';
-import 'package:chat_frontend_flutter/src/app/data/api/dialogs_api.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/dialogs_model.dart';
+import 'package:chat_frontend_flutter/src/app/core/database/models/dialogs_list_model.dart';
+import 'package:chat_frontend_flutter/src/app/api/dialogs_api.dart';
+import 'package:chat_frontend_flutter/src/app/api/dialog_api.dart';
+import 'package:chat_frontend_flutter/src/app/core/blocs/socket_bloc.dart';
+
+import 'package:sqflite/sqflite.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class DialogsBloc {
-  _socketStatus() {
-    print('socket run');
-  }
+  // static SocketBloc socketBloc = new SocketBloc();
+  final IO.Socket _socket = socketBloc.socket;
 
-// --> GET /socket.io/?EIO=3&transport=polling 404 1ms - 10.0.2.2 no proxy and with
-  socketFunc() {
-    IO.Socket socket =
-        IO.io('https://chat-backend-koa.herokuapp.com/', <String, dynamic>{
-      'transports': ['websocket'],
-    });
+  // DialogsBloc._();
 
-    socket.emit('connection', "connn");
+  // static final DialogsBloc db = DialogsBloc._();
 
-    socket.on('send_message', (message) {
-      print('send_message ${message}');
-    });
+  //  DialogsBloc _dialogsBloc;
 
-    socket.emit('send_message', "_socketStatus");
+  // DialogsBloc get dialogsBloc {
+  //   if (_dialogsBloc != null) return _dialogsBloc;
+  //   // if _database is null we instantiate it
+  //   _dialogsBloc = db;
+  //   dialogsApi.getDialogs().then((list) {
+  //     _dialogsList = list;
+  //     _syncController.sink
+  //         .add(UnmodifiableListView<DialogModel>(_dialogsList.dialogs));
+  //   });
+  //   return _dialogsBloc;
+  // }
 
-    socket.emit('disconnect', "(_) => print('disconnect')");
-
-    // socket.disconnect();
-  }
+  // IO.Socket get socket => _socket;
+  
+  String partnerId;
 
   StreamController<List<DialogModel>> _syncController =
       StreamController<List<DialogModel>>.broadcast();
@@ -45,13 +50,16 @@ class DialogsBloc {
   DialogListModel _dialogsList;
 
   DialogsBloc() {
+    print('DialogsBloc constructor');
     dialogsApi.getDialogs().then((list) {
       _dialogsList = list;
       _syncController.sink
           .add(UnmodifiableListView<DialogModel>(_dialogsList.dialogs));
     });
-
-    // socketFunc();
+    // dialogApi.getDialog(partnerId).then((data){
+    //     // _syncController.sink
+    //     //   .add(UnmodifiableListView<DialogModel>(_dialogsList.dialogs));
+    // });
   }
 
   DialogListModel initionalData() {
@@ -59,12 +67,13 @@ class DialogsBloc {
     dialogsApi.getDialogs().then((list) {
       data = list;
     });
-    // print(data);
     return data;
   }
 
   void dispose() {
+    print('DialogsBloc distructor');
     _syncController.close();
     _cmdController.close();
+    socketBloc.dispose();
   }
 }
