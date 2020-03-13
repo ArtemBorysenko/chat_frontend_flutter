@@ -18,7 +18,6 @@ class _DialogPage extends State<DialogPage> {
    DialogBloc dialogBloc;
    DialogsBloc dialogsBloc;
 
-
   @override
   Widget build(BuildContext context) {
     ScrollController _scrollController = new ScrollController();
@@ -92,6 +91,7 @@ class _DialogPage extends State<DialogPage> {
                   })
                   ),
           TextField(
+            autofocus: false,
             decoration: InputDecoration(hintText: "Type in here"),
             onSubmitted: (str) {
               dialogBloc.create(dialogId, str);

@@ -27,32 +27,41 @@ class SocketBloc {
   }
 
   SocketBloc._() {
-    print("1 SocketBloc function");
-
-    _socket = IO.io('http://10.0.2.2:3003/', <String, dynamic>{
-      'transports': ['websocket'],
-    });
+    print("CONSTRUCTOR SocketBloc function");
   }
 
-  static IO.Socket _socket;
+  static final IO.Socket _socket = IO.io('http://10.0.2.2:3003', <String, dynamic>{
+      'transports': ['websocket'],
+    });
 
   IO.Socket get socket => _socket;
 
-  // SocketBloc() {
-  //   // if (_socket == null) {
-  //   // print("socket constructor");
-    // _socket = IO.io('http://10.0.2.2:3003/', <String, dynamic>{
-    //   'transports': ['websocket'],
-    // });
-  //   // }
-  //   print("socket constructor");
-  // }
+  static StreamController<String> _cmdController;
+  Stream get getSocketBloc => _cmdController.stream;
+
+  closeStream() {
+    print('closeStream');
+    _cmdController.close();
+  }
 
   serverNewMessage() {
-    socket.on('SERVER:MESSAGE_NEW', (data) {
-      print("socket message $data");
+    _cmdController = StreamController<String>.broadcast();
+
+     _socket.on('connect', (_) {
+  print('connect');
+  socket.emit('msg', 'test');
+});
+
+    _socket.on('SERVER:MESSAGE_NEW', (data) {
+      print('SOCKET newMsg 1');
+     _cmdController.sink.add(data);
+      print('SOCKET newMsg 2');
     });
-    socket.emit('USER:MESSAGE_NEW', 'command USER:MESSA GE_NEW');
+
+    // socket.emit('USER:MESSAGE_NEW', 'command USER:MESSAGE_NEW');
+
+    // return await _newMsg;
+    //   print('SOCKET newMsg : $newMsg');
   }
 
   socketDisconnect() {

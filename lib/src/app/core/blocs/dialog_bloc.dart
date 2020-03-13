@@ -32,6 +32,9 @@ class DialogBloc {
 
   MessageListModel _dialogsList;
 
+  String data;
+  MessageListModel message;
+
   DialogBloc(String dialogId) {
     dialogApi.getDialog(dialogId).then((list) {
       _dialogsList = list;
@@ -40,21 +43,24 @@ class DialogBloc {
     });
   }
 
-  create(dialogId, text) {
-    messageApi.create(dialogId, text).then((message) {
+  create(dialogId, text) async {
+    await socketBloc.serverNewMessage();
+    await messageApi.create(dialogId, text);
 
-      socketBloc.serverNewMessage();
+    // data = await socketBloc.serverNewMessage();
+    // data = socketBloc.newMsg;
+    socketBloc.getSocketBloc.listen((event) {
+      // print('DIALOG data : $event');
 
-      // socket.on('SERVER:MESSAGE_NEW', (data) {
-      //   MessageListModel messageList =
-      //       MessageListModel.fromJSON(json.decode('[$data]'));
-      //   _dialogsList.add(messageList);
+      MessageListModel messageList =
+          MessageListModel.fromJSON(json.decode('[$event]'));
+      _dialogsList.add(messageList);
+      print('_dialogsList length : ${_dialogsList.messages.length}');
 
-      //   _syncController.sink
-      //     .add(UnmodifiableListView<MessageModel>(_dialogsList.messages));
-      // });
+      _syncController.sink
+          .add(UnmodifiableListView<MessageModel>(_dialogsList.messages));
 
-      // socket.emit('USER:MESSAGE_NEW', 'command USER:MESSA GE_NEW');
+      socketBloc.closeStream();
     });
   }
 

@@ -17,7 +17,7 @@ Future<MessageListModel> getDialog(String partnerId) async {
   'partner': partnerId,
 };
 
-  var uri = Uri.http(baseUrl,'api/v1/messages', queryParameters);//TODO v2
+  var uri = Uri.http(baseUrl,'api/v2/messages', queryParameters);//TODO v2
 
   http.Response response = await _getRequest(uri);
   // print(response.body);
